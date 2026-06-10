@@ -52,6 +52,6 @@ export async function uploadToAppetize(
 
   return {
     publicKey: data.publicKey,
-    embedUrl: `https://appetize.io/embed/${data.publicKey}?device=pixel7&osVersion=13.0&scale=auto&autoplay=true&orientation=portrait`,
+    embedUrl: `https://appetize.io/app/${data.publicKey}?device=pixel7&osVersion=13.0&scale=auto&autoplay=true&orientation=portrait`,
   };
 }

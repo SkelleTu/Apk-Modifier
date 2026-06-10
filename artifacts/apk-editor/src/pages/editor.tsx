@@ -15,7 +15,6 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import {
   ArrowLeft,
-  Play,
   Download,
   Save,
   RefreshCw,
@@ -31,7 +30,6 @@ import {
   FileCog,
   Smartphone,
   X,
-  Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -149,7 +147,6 @@ export default function Editor() {
 
   // Emulator state
   const [emulatorUrl, setEmulatorUrl] = useState<string | null>(null);
-  const [showEmulator, setShowEmulator] = useState(false);
   const [isUploadingToAppetize, setIsUploadingToAppetize] = useState(false);
 
   const handleDecompile = () => {
@@ -183,9 +180,10 @@ export default function Editor() {
       {
         onSuccess: (data) => {
           setEmulatorUrl(data.embedUrl);
-          setShowEmulator(true);
           setIsUploadingToAppetize(false);
-          toast({ title: "Emulator ready", description: "App loaded on Appetize.io" });
+          // Open directly in a new tab (embed requires paid Appetize plan)
+          window.open(data.embedUrl, "_blank", "noopener,noreferrer");
+          toast({ title: "Emulator opened", description: "App launched on Appetize.io in a new tab" });
         },
         onError: (err) => {
           setIsUploadingToAppetize(false);
@@ -321,7 +319,7 @@ export default function Editor() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         {/* Sidebar */}
         <aside className="w-64 border-r bg-card/50 flex flex-col overflow-hidden shrink-0">
           <div className="p-3 border-b bg-muted/20 font-semibold text-xs uppercase tracking-wider text-muted-foreground flex items-center justify-between">
@@ -351,12 +349,7 @@ export default function Editor() {
         </aside>
 
         {/* Editor */}
-        <main
-          className={cn(
-            "flex flex-col min-w-0 bg-[#0d1117] transition-all duration-300",
-            showEmulator ? "flex-1" : "flex-1",
-          )}
-        >
+        <main className="flex flex-col flex-1 min-w-0 bg-[#0d1117]">
           {selectedFile ? (
             <>
               <div className="flex-none h-10 bg-[#161b22] border-b border-[#30363d] flex items-center justify-between px-4">
@@ -408,51 +401,27 @@ export default function Editor() {
           )}
         </main>
 
-        {/* Appetize Emulator Panel */}
-        {showEmulator && emulatorUrl && (
-          <div className="w-[380px] shrink-0 border-l bg-card flex flex-col overflow-hidden">
-            <div className="flex-none h-10 bg-muted/30 border-b flex items-center justify-between px-3">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <Smartphone className="w-4 h-4 text-green-400" />
-                <span>Emulator</span>
-                <Badge variant="outline" className="text-xs bg-green-500/10 text-green-400 border-green-500/30">
-                  Live
-                </Badge>
-              </div>
-              <div className="flex items-center gap-1">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-7 text-xs"
-                  onClick={handleRunOnAppetize}
-                  disabled={isUploadingToAppetize}
-                  title="Reload with latest APK"
-                >
-                  {isUploadingToAppetize ? (
-                    <Loader2 className="w-3 h-3 animate-spin" />
-                  ) : (
-                    <Upload className="w-3 h-3" />
-                  )}
-                </Button>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-7 w-7 text-muted-foreground hover:text-foreground"
-                  onClick={() => setShowEmulator(false)}
-                >
-                  <X className="w-3.5 h-3.5" />
-                </Button>
-              </div>
-            </div>
-            <div className="flex-1 bg-black relative">
-              <iframe
-                key={emulatorUrl}
-                src={emulatorUrl}
-                className="absolute inset-0 w-full h-full border-0"
-                allow="fullscreen"
-                title="Appetize Emulator"
-              />
-            </div>
+        {/* Appetize link banner */}
+        {emulatorUrl && (
+          <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-card border border-green-500/30 rounded-lg px-4 py-2.5 shadow-lg">
+            <Smartphone className="w-4 h-4 text-green-400 shrink-0" />
+            <span className="text-sm text-muted-foreground">Emulator ready</span>
+            <a
+              href={emulatorUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-green-400 hover:text-green-300 underline underline-offset-2"
+            >
+              Open in new tab
+            </a>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-6 w-6 text-muted-foreground hover:text-foreground ml-1"
+              onClick={() => setEmulatorUrl(null)}
+            >
+              <X className="w-3 h-3" />
+            </Button>
           </div>
         )}
       </div>
