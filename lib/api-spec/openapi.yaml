@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: APK Editor API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: apks
+    description: APK management and editing
 paths:
   /healthz:
     get:
@@ -24,6 +26,196 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /apks:
+    get:
+      operationId: listApks
+      tags: [apks]
+      summary: List all uploaded APKs
+      responses:
+        "200":
+          description: List of APKs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Apk"
+
+  /apks/{id}:
+    get:
+      operationId: getApk
+      tags: [apks]
+      summary: Get APK details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: APK details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Apk"
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteApk
+      tags: [apks]
+      summary: Delete an APK
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /apks/{id}/decompile:
+    post:
+      operationId: decompileApk
+      tags: [apks]
+      summary: Decompile an APK using apktool
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Decompile started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Apk"
+        "404":
+          description: Not found
+
+  /apks/{id}/files:
+    get:
+      operationId: getApkFiles
+      tags: [apks]
+      summary: Get decompiled file tree
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File tree
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FileNode"
+        "404":
+          description: Not found
+
+  /apks/{id}/file-read:
+    post:
+      operationId: readApkFile
+      tags: [apks]
+      summary: Read content of a decompiled file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FilePathInput"
+      responses:
+        "200":
+          description: File content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileContent"
+        "404":
+          description: Not found
+
+  /apks/{id}/file-write:
+    post:
+      operationId: writeApkFile
+      tags: [apks]
+      summary: Write content to a decompiled file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FileWrite"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileContent"
+        "404":
+          description: Not found
+
+  /apks/{id}/recompile:
+    post:
+      operationId: recompileApk
+      tags: [apks]
+      summary: Recompile modified APK using apktool
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Recompile started
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Apk"
+        "404":
+          description: Not found
+
+  /apks/{id}/status:
+    get:
+      operationId: getApkStatus
+      tags: [apks]
+      summary: Get processing status of an APK
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Status info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApkStatus"
+        "404":
+          description: Not found
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +226,85 @@ components:
       required:
         - status
 
+    Apk:
+      type: object
+      required: [id, name, status, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [uploaded, decompiling, decompiled, recompiling, recompiled, error]
+        size:
+          type: ["integer", "null"]
+        packageName:
+          type: ["string", "null"]
+        versionName:
+          type: ["string", "null"]
+        versionCode:
+          type: ["string", "null"]
+        errorMessage:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    ApkStatus:
+      type: object
+      required: [id, status]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [uploaded, decompiling, decompiled, recompiling, recompiled, error]
+        message:
+          type: ["string", "null"]
+        progress:
+          type: ["integer", "null"]
+
+    FileNode:
+      type: object
+      required: [name, path, type]
+      properties:
+        name:
+          type: string
+        path:
+          type: string
+        type:
+          type: string
+          enum: [file, directory]
+        children:
+          type: ["array", "null"]
+          items:
+            $ref: "#/components/schemas/FileNode"
+        size:
+          type: ["integer", "null"]
+
+    FileContent:
+      type: object
+      required: [path, content]
+      properties:
+        path:
+          type: string
+        content:
+          type: string
+
+    FilePathInput:
+      type: object
+      required: [filePath]
+      properties:
+        filePath:
+          type: string
+
+    FileWrite:
+      type: object
+      required: [filePath, content]
+      properties:
+        filePath:
+          type: string
+        content:
+          type: string
