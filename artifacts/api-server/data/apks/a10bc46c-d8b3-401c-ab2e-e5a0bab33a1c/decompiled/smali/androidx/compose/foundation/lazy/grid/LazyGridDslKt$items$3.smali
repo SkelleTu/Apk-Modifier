@@ -1,0 +1,157 @@
+.class public final Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;
+.super Ljava/lang/Object;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+# interfaces
+.implements Lq7/e;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Landroidx/compose/foundation/lazy/grid/LazyGridDslKt;->items(Landroidx/compose/foundation/lazy/grid/LazyGridScope;Ljava/util/List;Lq7/c;Lq7/e;Lq7/c;Lq7/g;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Ljava/lang/Object;",
+        "Lq7/e;"
+    }
+.end annotation
+
+
+# instance fields
+.field final synthetic $items:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List<",
+            "TT;>;"
+        }
+    .end annotation
+.end field
+
+.field final synthetic $span:Lq7/e;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Lq7/e;"
+        }
+    .end annotation
+.end field
+
+
+# direct methods
+.method public constructor <init>(Lq7/e;Ljava/util/List;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lq7/e;",
+            "Ljava/util/List<",
+            "+TT;>;)V"
+        }
+    .end annotation
+
+    .line 1
+    iput-object p1, p0, Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;->$span:Lq7/e;
+
+    .line 2
+    .line 3
+    iput-object p2, p0, Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;->$items:Ljava/util/List;
+
+    .line 4
+    .line 5
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 6
+    .line 7
+    .line 8
+    return-void
+.end method
+
+
+# virtual methods
+.method public bridge synthetic invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    check-cast p1, Landroidx/compose/foundation/lazy/grid/LazyGridItemSpanScope;
+
+    .line 2
+    .line 3
+    check-cast p2, Ljava/lang/Number;
+
+    .line 4
+    .line 5
+    invoke-virtual {p2}, Ljava/lang/Number;->intValue()I
+
+    .line 6
+    .line 7
+    .line 8
+    move-result p2
+
+    .line 9
+    invoke-virtual {p0, p1, p2}, Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;->invoke-_-orMbw(Landroidx/compose/foundation/lazy/grid/LazyGridItemSpanScope;I)J
+
+    .line 10
+    .line 11
+    .line 12
+    move-result-wide p1
+
+    .line 13
+    invoke-static {p1, p2}, Landroidx/compose/foundation/lazy/grid/GridItemSpan;->box-impl(J)Landroidx/compose/foundation/lazy/grid/GridItemSpan;
+
+    .line 14
+    .line 15
+    .line 16
+    move-result-object p1
+
+    .line 17
+    return-object p1
+.end method
+
+.method public final invoke-_-orMbw(Landroidx/compose/foundation/lazy/grid/LazyGridItemSpanScope;I)J
+    .locals 2
+
+    .line 1
+    iget-object v0, p0, Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;->$span:Lq7/e;
+
+    .line 2
+    .line 3
+    iget-object v1, p0, Landroidx/compose/foundation/lazy/grid/LazyGridDslKt$items$3;->$items:Ljava/util/List;
+
+    .line 4
+    .line 5
+    invoke-interface {v1, p2}, Ljava/util/List;->get(I)Ljava/lang/Object;
+
+    .line 6
+    .line 7
+    .line 8
+    move-result-object p2
+
+    .line 9
+    invoke-interface {v0, p1, p2}, Lq7/e;->invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 10
+    .line 11
+    .line 12
+    move-result-object p1
+
+    .line 13
+    check-cast p1, Landroidx/compose/foundation/lazy/grid/GridItemSpan;
+
+    .line 14
+    .line 15
+    invoke-virtual {p1}, Landroidx/compose/foundation/lazy/grid/GridItemSpan;->unbox-impl()J
+
+    .line 16
+    .line 17
+    .line 18
+    move-result-wide p1
+
+    .line 19
+    return-wide p1
+.end method

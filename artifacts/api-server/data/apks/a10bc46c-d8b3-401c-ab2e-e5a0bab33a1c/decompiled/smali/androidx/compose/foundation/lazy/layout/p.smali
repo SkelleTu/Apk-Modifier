@@ -1,0 +1,98 @@
+.class public final synthetic Landroidx/compose/foundation/lazy/layout/p;
+.super Ljava/lang/Object;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+# interfaces
+.implements Lq7/e;
+
+
+# instance fields
+.field public final synthetic a:Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;
+
+.field public final synthetic b:Ljava/lang/Object;
+
+.field public final synthetic l:Lq7/e;
+
+.field public final synthetic m:I
+
+
+# direct methods
+.method public synthetic constructor <init>(Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;Ljava/lang/Object;Lq7/e;I)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    iput-object p1, p0, Landroidx/compose/foundation/lazy/layout/p;->a:Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;
+
+    .line 5
+    .line 6
+    iput-object p2, p0, Landroidx/compose/foundation/lazy/layout/p;->b:Ljava/lang/Object;
+
+    .line 7
+    .line 8
+    iput-object p3, p0, Landroidx/compose/foundation/lazy/layout/p;->l:Lq7/e;
+
+    .line 9
+    .line 10
+    iput p4, p0, Landroidx/compose/foundation/lazy/layout/p;->m:I
+
+    .line 11
+    .line 12
+    return-void
+.end method
+
+
+# virtual methods
+.method public final invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 6
+
+    .line 1
+    move-object v4, p1
+
+    .line 2
+    check-cast v4, Landroidx/compose/runtime/Composer;
+
+    .line 3
+    .line 4
+    check-cast p2, Ljava/lang/Integer;
+
+    .line 5
+    .line 6
+    invoke-virtual {p2}, Ljava/lang/Integer;->intValue()I
+
+    .line 7
+    .line 8
+    .line 9
+    move-result v5
+
+    .line 10
+    iget-object v0, p0, Landroidx/compose/foundation/lazy/layout/p;->a:Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;
+
+    .line 11
+    .line 12
+    iget-object v1, p0, Landroidx/compose/foundation/lazy/layout/p;->b:Ljava/lang/Object;
+
+    .line 13
+    .line 14
+    iget-object v2, p0, Landroidx/compose/foundation/lazy/layout/p;->l:Lq7/e;
+
+    .line 15
+    .line 16
+    iget v3, p0, Landroidx/compose/foundation/lazy/layout/p;->m:I
+
+    .line 17
+    .line 18
+    invoke-static/range {v0 .. v5}, Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;->c(Landroidx/compose/foundation/lazy/layout/LazySaveableStateHolder;Ljava/lang/Object;Lq7/e;ILandroidx/compose/runtime/Composer;I)Lc7/z;
+
+    .line 19
+    .line 20
+    .line 21
+    move-result-object p1
+
+    .line 22
+    return-object p1
+.end method

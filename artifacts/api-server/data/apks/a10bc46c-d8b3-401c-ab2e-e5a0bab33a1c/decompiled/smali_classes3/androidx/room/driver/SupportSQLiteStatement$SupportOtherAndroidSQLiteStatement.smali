@@ -1,0 +1,503 @@
+.class final Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;
+.super Landroidx/room/driver/SupportSQLiteStatement;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Landroidx/room/driver/SupportSQLiteStatement;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "SupportOtherAndroidSQLiteStatement"
+.end annotation
+
+
+# instance fields
+.field private final delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+
+# direct methods
+.method public constructor <init>(Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 2
+    .line 3
+    .line 4
+    invoke-virtual {p2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 5
+    .line 6
+    .line 7
+    const/4 v0, 0x0
+
+    .line 8
+    invoke-direct {p0, p1, p2, v0}, Landroidx/room/driver/SupportSQLiteStatement;-><init>(Landroidx/sqlite/db/SupportSQLiteDatabase;Ljava/lang/String;Lkotlin/jvm/internal/h;)V
+
+    .line 9
+    .line 10
+    .line 11
+    invoke-interface {p1, p2}, Landroidx/sqlite/db/SupportSQLiteDatabase;->compileStatement(Ljava/lang/String;)Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 12
+    .line 13
+    .line 14
+    move-result-object p1
+
+    .line 15
+    iput-object p1, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 16
+    .line 17
+    return-void
+.end method
+
+
+# virtual methods
+.method public bindBlob(I[B)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 2
+    .line 3
+    .line 4
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 5
+    .line 6
+    .line 7
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 8
+    .line 9
+    invoke-interface {v0, p1, p2}, Landroidx/sqlite/db/SupportSQLiteProgram;->bindBlob(I[B)V
+
+    .line 10
+    .line 11
+    .line 12
+    return-void
+.end method
+
+.method public bindDouble(ID)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 5
+    .line 6
+    invoke-interface {v0, p1, p2, p3}, Landroidx/sqlite/db/SupportSQLiteProgram;->bindDouble(ID)V
+
+    .line 7
+    .line 8
+    .line 9
+    return-void
+.end method
+
+.method public bindLong(IJ)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 5
+    .line 6
+    invoke-interface {v0, p1, p2, p3}, Landroidx/sqlite/db/SupportSQLiteProgram;->bindLong(IJ)V
+
+    .line 7
+    .line 8
+    .line 9
+    return-void
+.end method
+
+.method public bindNull(I)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 5
+    .line 6
+    invoke-interface {v0, p1}, Landroidx/sqlite/db/SupportSQLiteProgram;->bindNull(I)V
+
+    .line 7
+    .line 8
+    .line 9
+    return-void
+.end method
+
+.method public bindText(ILjava/lang/String;)V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 2
+    .line 3
+    .line 4
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 5
+    .line 6
+    .line 7
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 8
+    .line 9
+    invoke-interface {v0, p1, p2}, Landroidx/sqlite/db/SupportSQLiteProgram;->bindString(ILjava/lang/String;)V
+
+    .line 10
+    .line 11
+    .line 12
+    return-void
+.end method
+
+.method public clearBindings()V
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 5
+    .line 6
+    invoke-interface {v0}, Landroidx/sqlite/db/SupportSQLiteProgram;->clearBindings()V
+
+    .line 7
+    .line 8
+    .line 9
+    return-void
+.end method
+
+.method public close()V
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 2
+    .line 3
+    invoke-interface {v0}, Ljava/io/Closeable;->close()V
+
+    .line 4
+    .line 5
+    .line 6
+    const/4 v0, 0x1
+
+    .line 7
+    invoke-virtual {p0, v0}, Landroidx/room/driver/SupportSQLiteStatement;->setClosed(Z)V
+
+    .line 8
+    .line 9
+    .line 10
+    return-void
+.end method
+
+.method public getBlob(I)[B
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public getColumnCount()I
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/4 v0, 0x0
+
+    .line 5
+    return v0
+.end method
+
+.method public getColumnName(I)Ljava/lang/String;
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public getColumnType(I)I
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public getDouble(I)D
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public getLong(I)J
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public getText(I)Ljava/lang/String;
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public isNull(I)Z
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    const/16 p1, 0x15
+
+    .line 5
+    .line 6
+    const-string v0, "no row"
+
+    .line 7
+    .line 8
+    invoke-static {p1, v0}, Landroidx/sqlite/SQLite;->throwSQLiteException(ILjava/lang/String;)Ljava/lang/Void;
+
+    .line 9
+    .line 10
+    .line 11
+    new-instance p1, Lc4/b;
+
+    .line 12
+    .line 13
+    invoke-direct {p1}, Ljava/lang/RuntimeException;-><init>()V
+
+    .line 14
+    .line 15
+    .line 16
+    throw p1
+.end method
+
+.method public reset()V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public step()Z
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Landroidx/room/driver/SupportSQLiteStatement;->throwIfClosed()V
+
+    .line 2
+    .line 3
+    .line 4
+    iget-object v0, p0, Landroidx/room/driver/SupportSQLiteStatement$SupportOtherAndroidSQLiteStatement;->delegate:Landroidx/sqlite/db/SupportSQLiteStatement;
+
+    .line 5
+    .line 6
+    invoke-interface {v0}, Landroidx/sqlite/db/SupportSQLiteStatement;->execute()V
+
+    .line 7
+    .line 8
+    .line 9
+    const/4 v0, 0x0
+
+    .line 10
+    return v0
+.end method

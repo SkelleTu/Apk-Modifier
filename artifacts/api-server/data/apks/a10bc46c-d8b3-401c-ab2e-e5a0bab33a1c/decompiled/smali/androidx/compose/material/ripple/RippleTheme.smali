@@ -1,0 +1,65 @@
+.class public interface abstract Landroidx/compose/material/ripple/RippleTheme;
+.super Ljava/lang/Object;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+
+# annotations
+.annotation runtime Lc7/c;
+.end annotation
+
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Landroidx/compose/material/ripple/RippleTheme$Companion;
+    }
+.end annotation
+
+
+# static fields
+.field public static final Companion:Landroidx/compose/material/ripple/RippleTheme$Companion;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    sget-object v0, Landroidx/compose/material/ripple/RippleTheme$Companion;->$$INSTANCE:Landroidx/compose/material/ripple/RippleTheme$Companion;
+
+    .line 2
+    .line 3
+    sput-object v0, Landroidx/compose/material/ripple/RippleTheme;->Companion:Landroidx/compose/material/ripple/RippleTheme$Companion;
+
+    .line 4
+    .line 5
+    return-void
+.end method
+
+
+# virtual methods
+.method public abstract defaultColor-WaAFU9c(Landroidx/compose/runtime/Composer;I)J
+    .annotation build Landroidx/compose/runtime/Composable;
+    .end annotation
+
+    .annotation build Landroidx/compose/runtime/internal/FunctionKeyMeta;
+        endOffset = 0x6c9
+        key = -0x72594e81
+        startOffset = 0x6b0
+    .end annotation
+
+    .annotation runtime Lc7/c;
+    .end annotation
+.end method
+
+.method public abstract rippleAlpha(Landroidx/compose/runtime/Composer;I)Landroidx/compose/material/ripple/RippleAlpha;
+    .annotation build Landroidx/compose/runtime/Composable;
+    .end annotation
+
+    .annotation build Landroidx/compose/runtime/internal/FunctionKeyMeta;
+        endOffset = 0x87f
+        key = 0x5e0610c4
+        startOffset = 0x861
+    .end annotation
+
+    .annotation runtime Lc7/c;
+    .end annotation
+.end method

@@ -1,0 +1,34 @@
+.class final Landroidx/core/os/BufferFillPolicy$RingBuffer;
+.super Landroidx/core/os/BufferFillPolicy;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Landroidx/core/os/BufferFillPolicy;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "RingBuffer"
+.end annotation
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 2
+
+    .line 1
+    const/4 v0, 0x2
+
+    .line 2
+    const/4 v1, 0x0
+
+    .line 3
+    invoke-direct {p0, v0, v1}, Landroidx/core/os/BufferFillPolicy;-><init>(ILkotlin/jvm/internal/h;)V
+
+    .line 4
+    .line 5
+    .line 6
+    return-void
+.end method

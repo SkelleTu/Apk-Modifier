@@ -1,0 +1,202 @@
+.class public final Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;
+.super Ljava/lang/Object;
+.source "r8-map-id-e907cdfad2df14fd92982b00c76004907cc554632fe47bc57470e213e2fdbf5b"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "WindowLayoutChangeCallbackWrapper"
+.end annotation
+
+
+# instance fields
+.field private final activity:Landroid/app/Activity;
+
+.field private final callback:Landroidx/core/util/Consumer;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Landroidx/core/util/Consumer<",
+            "Landroidx/window/layout/WindowLayoutInfo;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+.field private final executor:Ljava/util/concurrent/Executor;
+
+.field private lastInfo:Landroidx/window/layout/WindowLayoutInfo;
+
+
+# direct methods
+.method public constructor <init>(Landroid/app/Activity;Ljava/util/concurrent/Executor;Landroidx/core/util/Consumer;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/app/Activity;",
+            "Ljava/util/concurrent/Executor;",
+            "Landroidx/core/util/Consumer<",
+            "Landroidx/window/layout/WindowLayoutInfo;",
+            ">;)V"
+        }
+    .end annotation
+
+    .line 1
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 2
+    .line 3
+    .line 4
+    invoke-virtual {p2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 5
+    .line 6
+    .line 7
+    invoke-virtual {p3}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 8
+    .line 9
+    .line 10
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 11
+    .line 12
+    .line 13
+    iput-object p1, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->activity:Landroid/app/Activity;
+
+    .line 14
+    .line 15
+    iput-object p2, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->executor:Ljava/util/concurrent/Executor;
+
+    .line 16
+    .line 17
+    iput-object p3, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->callback:Landroidx/core/util/Consumer;
+
+    .line 18
+    .line 19
+    return-void
+.end method
+
+.method public static synthetic a(Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;Landroidx/window/layout/WindowLayoutInfo;)V
+    .locals 0
+
+    .line 1
+    invoke-static {p0, p1}, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->accept$lambda$0(Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;Landroidx/window/layout/WindowLayoutInfo;)V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+.method private static final accept$lambda$0(Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;Landroidx/window/layout/WindowLayoutInfo;)V
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->callback:Landroidx/core/util/Consumer;
+
+    .line 2
+    .line 3
+    invoke-interface {p0, p1}, Landroidx/core/util/Consumer;->accept(Ljava/lang/Object;)V
+
+    .line 4
+    .line 5
+    .line 6
+    return-void
+.end method
+
+
+# virtual methods
+.method public final accept(Landroidx/window/layout/WindowLayoutInfo;)V
+    .locals 3
+
+    .line 1
+    invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 2
+    .line 3
+    .line 4
+    iput-object p1, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->lastInfo:Landroidx/window/layout/WindowLayoutInfo;
+
+    .line 5
+    .line 6
+    iget-object v0, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->executor:Ljava/util/concurrent/Executor;
+
+    .line 7
+    .line 8
+    new-instance v1, La6/d;
+
+    .line 9
+    .line 10
+    const/4 v2, 0x5
+
+    .line 11
+    invoke-direct {v1, v2, p0, p1}, La6/d;-><init>(ILjava/lang/Object;Ljava/lang/Object;)V
+
+    .line 12
+    .line 13
+    .line 14
+    invoke-interface {v0, v1}, Ljava/util/concurrent/Executor;->execute(Ljava/lang/Runnable;)V
+
+    .line 15
+    .line 16
+    .line 17
+    return-void
+.end method
+
+.method public final getActivity()Landroid/app/Activity;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->activity:Landroid/app/Activity;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final getCallback()Landroidx/core/util/Consumer;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()",
+            "Landroidx/core/util/Consumer<",
+            "Landroidx/window/layout/WindowLayoutInfo;",
+            ">;"
+        }
+    .end annotation
+
+    .line 1
+    iget-object v0, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->callback:Landroidx/core/util/Consumer;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final getLastInfo()Landroidx/window/layout/WindowLayoutInfo;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->lastInfo:Landroidx/window/layout/WindowLayoutInfo;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final setLastInfo(Landroidx/window/layout/WindowLayoutInfo;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, Landroidx/window/layout/adapter/sidecar/SidecarWindowBackend$WindowLayoutChangeCallbackWrapper;->lastInfo:Landroidx/window/layout/WindowLayoutInfo;
+
+    .line 2
+    .line 3
+    return-void
+.end method
