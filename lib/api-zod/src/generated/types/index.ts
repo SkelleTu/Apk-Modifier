@@ -10,6 +10,7 @@ export * from './apk';
 export * from './apkStatus';
 export * from './apkStatusProperty';
 export * from './apkStatusStatus';
+export * from './appetizeSession';
 export * from './fileContent';
 export * from './fileNode';
 export * from './fileNodeType';

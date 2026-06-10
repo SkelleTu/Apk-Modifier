@@ -22,6 +22,7 @@ import type {
 import type {
   Apk,
   ApkStatus,
+  AppetizeSession,
   FileContent,
   FileNode,
   FilePathInput,
@@ -702,6 +703,76 @@ export const useRecompileApk = <TError = ErrorType<void>,
         TContext
       > => {
       return useMutation(getRecompileApkMutationOptions(options));
+    }
+
+export const getPublishToAppetizeUrl = (id: string,) => {
+
+
+
+
+  return `/api/apks/${id}/appetize`
+}
+
+/**
+ * @summary Upload APK to Appetize.io and get an emulator session
+ */
+export const publishToAppetize = async (id: string, options?: RequestInit): Promise<AppetizeSession> => {
+
+  return customFetch<AppetizeSession>(getPublishToAppetizeUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+export const getPublishToAppetizeMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publishToAppetize>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof publishToAppetize>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['publishToAppetize'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof publishToAppetize>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  publishToAppetize(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PublishToAppetizeMutationResult = NonNullable<Awaited<ReturnType<typeof publishToAppetize>>>
+
+    export type PublishToAppetizeMutationError = ErrorType<void>
+
+    /**
+ * @summary Upload APK to Appetize.io and get an emulator session
+ */
+export const usePublishToAppetize = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publishToAppetize>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof publishToAppetize>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+      return useMutation(getPublishToAppetizeMutationOptions(options));
     }
 
 export const getGetApkStatusUrl = (id: string,) => {

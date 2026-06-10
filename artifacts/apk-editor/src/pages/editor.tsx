@@ -1,22 +1,67 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
-import { useGetApk, useGetApkStatus, useDecompileApk, useRecompileApk, useGetApkFiles, useReadApkFile, useWriteApkFile, FileNode, getGetApkQueryKey, Apk } from "@workspace/api-client-react";
+import {
+  useGetApk,
+  useGetApkStatus,
+  useDecompileApk,
+  useRecompileApk,
+  useGetApkFiles,
+  useReadApkFile,
+  useWriteApkFile,
+  usePublishToAppetize,
+  FileNode,
+  getGetApkQueryKey,
+} from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Play, Download, Save, RefreshCw, FolderOpen, FileText, FileJson, AlertTriangle, FileCode2, ChevronRight, ChevronDown, Package, Loader2, FileCog } from "lucide-react";
+import {
+  ArrowLeft,
+  Play,
+  Download,
+  Save,
+  RefreshCw,
+  FolderOpen,
+  FileText,
+  FileJson,
+  AlertTriangle,
+  FileCode2,
+  ChevronRight,
+  ChevronDown,
+  Package,
+  Loader2,
+  FileCog,
+  Smartphone,
+  X,
+  Upload,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-// --- Subcomponents ---
-
-function TreeItem({ node, path, onSelect, selectedPath, depth = 0 }: { node: FileNode, path: string, onSelect: (path: string) => void, selectedPath: string, depth?: number }) {
-  const [isOpen, setIsOpen] = useState(false);
+function TreeItem({
+  node,
+  path,
+  onSelect,
+  selectedPath,
+  depth = 0,
+}: {
+  node: FileNode;
+  path: string;
+  onSelect: (path: string) => void;
+  selectedPath: string;
+  depth?: number;
+}) {
+  const [isOpen, setIsOpen] = useState(depth === 0);
   const isSelected = selectedPath === path;
   const isDir = node.type === "directory";
 
   const getIcon = () => {
-    if (isDir) return isOpen ? <FolderOpen className="w-4 h-4 text-blue-400" /> : <FolderOpen className="w-4 h-4 text-muted-foreground" />;
+    if (isDir)
+      return isOpen ? (
+        <FolderOpen className="w-4 h-4 text-blue-400" />
+      ) : (
+        <FolderOpen className="w-4 h-4 text-muted-foreground" />
+      );
     if (node.name.endsWith(".xml")) return <FileCode2 className="w-4 h-4 text-orange-400" />;
     if (node.name.endsWith(".smali")) return <FileText className="w-4 h-4 text-purple-400" />;
     if (node.name.endsWith(".json")) return <FileJson className="w-4 h-4 text-yellow-400" />;
@@ -25,18 +70,15 @@ function TreeItem({ node, path, onSelect, selectedPath, depth = 0 }: { node: Fil
 
   return (
     <div>
-      <div 
+      <div
         className={cn(
           "flex items-center gap-1.5 py-1 px-2 hover:bg-muted/50 cursor-pointer text-sm select-none",
-          isSelected && "bg-primary/20 text-primary hover:bg-primary/30"
+          isSelected && "bg-primary/20 text-primary hover:bg-primary/30",
         )}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         onClick={() => {
-          if (isDir) {
-            setIsOpen(!isOpen);
-          } else {
-            onSelect(path);
-          }
+          if (isDir) setIsOpen(!isOpen);
+          else onSelect(path);
         }}
       >
         <span className="w-4 h-4 flex items-center justify-center">
@@ -45,17 +87,16 @@ function TreeItem({ node, path, onSelect, selectedPath, depth = 0 }: { node: Fil
         {getIcon()}
         <span className="truncate">{node.name}</span>
       </div>
-      
       {isDir && isOpen && node.children && (
         <div className="flex flex-col">
-          {node.children.map(child => (
-            <TreeItem 
-              key={child.path} 
-              node={child} 
-              path={child.path} 
-              onSelect={onSelect} 
-              selectedPath={selectedPath} 
-              depth={depth + 1} 
+          {node.children.map((child) => (
+            <TreeItem
+              key={child.path}
+              node={child}
+              path={child.path}
+              onSelect={onSelect}
+              selectedPath={selectedPath}
+              depth={depth + 1}
             />
           ))}
         </div>
@@ -64,8 +105,6 @@ function TreeItem({ node, path, onSelect, selectedPath, depth = 0 }: { node: Fil
   );
 }
 
-// --- Main Page ---
-
 export default function Editor() {
   const params = useParams();
   const id = params.id as string;
@@ -73,17 +112,15 @@ export default function Editor() {
   const queryClient = useQueryClient();
 
   const { data: apk, isLoading: isApkLoading } = useGetApk(id);
-  
-  // Status polling
+
   const isPolling = apk?.status === "decompiling" || apk?.status === "recompiling";
-  const { data: status } = useGetApkStatus(id, { 
-    query: { 
+  const { data: status } = useGetApkStatus(id, {
+    query: {
       enabled: isPolling,
-      refetchInterval: isPolling ? 2000 : false
-    } 
+      refetchInterval: isPolling ? 2000 : false,
+    },
   });
 
-  // Update APK state when status changes
   useEffect(() => {
     if (status && apk && status.status !== apk.status) {
       queryClient.invalidateQueries({ queryKey: getGetApkQueryKey(id) });
@@ -95,12 +132,13 @@ export default function Editor() {
     }
   }, [status, apk, id, queryClient, toast]);
 
-  // Mutations
   const decompile = useDecompileApk();
   const recompile = useRecompileApk();
-  
-  // File operations
-  const { data: fileTree } = useGetApkFiles(id, { query: { enabled: apk?.status === "decompiled" || apk?.status === "recompiled" }});
+  const publishToAppetize = usePublishToAppetize();
+
+  const { data: fileTree } = useGetApkFiles(id, {
+    query: { enabled: apk?.status === "decompiled" || apk?.status === "recompiled" },
+  });
   const readFile = useReadApkFile();
   const writeFile = useWriteApkFile();
 
@@ -109,112 +147,175 @@ export default function Editor() {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [isFileLoading, setIsFileLoading] = useState(false);
 
+  // Emulator state
+  const [emulatorUrl, setEmulatorUrl] = useState<string | null>(null);
+  const [showEmulator, setShowEmulator] = useState(false);
+  const [isUploadingToAppetize, setIsUploadingToAppetize] = useState(false);
+
   const handleDecompile = () => {
-    decompile.mutate({ id }, {
-      onSuccess: () => {
-        toast({ title: "Decompilation started" });
-        queryClient.invalidateQueries({ queryKey: getGetApkQueryKey(id) });
-      }
-    });
+    decompile.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          toast({ title: "Decompilation started" });
+          queryClient.invalidateQueries({ queryKey: getGetApkQueryKey(id) });
+        },
+      },
+    );
   };
 
   const handleRecompile = () => {
-    recompile.mutate({ id }, {
-      onSuccess: () => {
-        toast({ title: "Recompilation started" });
-        queryClient.invalidateQueries({ queryKey: getGetApkQueryKey(id) });
-      }
-    });
+    recompile.mutate(
+      { id },
+      {
+        onSuccess: () => {
+          toast({ title: "Recompilation started" });
+          queryClient.invalidateQueries({ queryKey: getGetApkQueryKey(id) });
+        },
+      },
+    );
+  };
+
+  const handleRunOnAppetize = () => {
+    setIsUploadingToAppetize(true);
+    publishToAppetize.mutate(
+      { id },
+      {
+        onSuccess: (data) => {
+          setEmulatorUrl(data.embedUrl);
+          setShowEmulator(true);
+          setIsUploadingToAppetize(false);
+          toast({ title: "Emulator ready", description: "App loaded on Appetize.io" });
+        },
+        onError: (err) => {
+          setIsUploadingToAppetize(false);
+          const msg = (err as { data?: { error?: string } })?.data?.error || "Failed to launch emulator";
+          toast({ title: "Emulator error", description: msg, variant: "destructive" });
+        },
+      },
+    );
   };
 
   const handleFileSelect = (path: string) => {
     if (hasUnsavedChanges) {
       if (!window.confirm("You have unsaved changes. Discard?")) return;
     }
-    
     setSelectedFile(path);
     setIsFileLoading(true);
     setHasUnsavedChanges(false);
-    
-    readFile.mutate({ id, data: { filePath: path } }, {
-      onSuccess: (data) => {
-        setFileContent(data.content);
-        setIsFileLoading(false);
+    readFile.mutate(
+      { id, data: { filePath: path } },
+      {
+        onSuccess: (data) => {
+          setFileContent(data.content);
+          setIsFileLoading(false);
+        },
+        onError: () => {
+          toast({ title: "Failed to read file", variant: "destructive" });
+          setIsFileLoading(false);
+          setFileContent("");
+        },
       },
-      onError: () => {
-        toast({ title: "Failed to read file", variant: "destructive" });
-        setIsFileLoading(false);
-        setFileContent("");
-      }
-    });
+    );
   };
 
   const handleSaveFile = () => {
     if (!selectedFile) return;
-    writeFile.mutate({ id, data: { filePath: selectedFile, content: fileContent } }, {
-      onSuccess: () => {
-        setHasUnsavedChanges(false);
-        toast({ title: "File saved successfully" });
+    writeFile.mutate(
+      { id, data: { filePath: selectedFile, content: fileContent } },
+      {
+        onSuccess: () => {
+          setHasUnsavedChanges(false);
+          toast({ title: "File saved" });
+        },
+        onError: () => {
+          toast({ title: "Failed to save file", variant: "destructive" });
+        },
       },
-      onError: () => {
-        toast({ title: "Failed to save file", variant: "destructive" });
-      }
-    });
+    );
   };
 
-  if (isApkLoading) return <div className="h-screen w-full flex items-center justify-center bg-background text-foreground"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>;
-  if (!apk) return <div className="h-screen flex items-center justify-center">APK not found</div>;
+  if (isApkLoading)
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-background text-foreground">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  if (!apk)
+    return <div className="h-screen flex items-center justify-center text-foreground">APK not found</div>;
+
+  const canRun = apk.status === "uploaded" || apk.status === "decompiled" || apk.status === "recompiled";
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground font-sans overflow-hidden">
       {/* Top Bar */}
-      <header className="flex-none h-14 border-b bg-card flex items-center justify-between px-4">
-        <div className="flex items-center gap-4">
+      <header className="flex-none h-14 border-b bg-card flex items-center justify-between px-4 gap-4">
+        <div className="flex items-center gap-3 min-w-0">
           <Link href="/">
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground shrink-0">
               <ArrowLeft className="w-4 h-4" />
             </Button>
           </Link>
-          <div className="flex items-center gap-2">
-            <Package className="w-5 h-5 text-primary" />
-            <h1 className="font-semibold">{apk.name}</h1>
+          <div className="flex items-center gap-2 min-w-0">
+            <Package className="w-5 h-5 text-primary shrink-0" />
+            <h1 className="font-semibold truncate">{apk.name}</h1>
           </div>
-          <div className="h-6 border-l mx-2"></div>
-          <div className="flex items-center gap-3 text-sm text-muted-foreground font-mono">
-            {apk.packageName && <span>{apk.packageName}</span>}
-            {apk.versionName && <Badge variant="outline" className="font-mono bg-transparent">v{apk.versionName}</Badge>}
+          <div className="h-6 border-l shrink-0" />
+          <div className="flex items-center gap-3 text-sm text-muted-foreground font-mono min-w-0">
+            {apk.packageName && <span className="truncate">{apk.packageName}</span>}
+            {apk.versionName && (
+              <Badge variant="outline" className="font-mono bg-transparent shrink-0">
+                v{apk.versionName}
+              </Badge>
+            )}
           </div>
         </div>
-        
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-2 shrink-0">
+          {isPolling && (
+            <div className="flex items-center gap-2 text-sm text-primary bg-primary/10 px-3 py-1.5 rounded-md border border-primary/20">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span className="font-medium capitalize">{apk.status}...</span>
+            </div>
+          )}
+
           {apk.status === "uploaded" && (
             <Button onClick={handleDecompile} disabled={decompile.isPending} size="sm">
               <RefreshCw className={cn("w-4 h-4 mr-2", decompile.isPending && "animate-spin")} />
               Decompile
             </Button>
           )}
-          
+
           {(apk.status === "decompiled" || apk.status === "recompiled") && (
             <Button onClick={handleRecompile} disabled={recompile.isPending} size="sm" variant="secondary">
-              <Play className="w-4 h-4 mr-2" />
+              <RefreshCw className={cn("w-4 h-4 mr-2", recompile.isPending && "animate-spin")} />
               Recompile
             </Button>
           )}
 
           {apk.status === "recompiled" && (
             <a href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/api/apks/${id}/download`} download>
-              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+              <Button size="sm" variant="outline">
                 <Download className="w-4 h-4 mr-2" />
-                Download APK
+                Download
               </Button>
             </a>
           )}
 
-          {isPolling && (
-            <div className="flex items-center gap-2 text-sm text-primary bg-primary/10 px-3 py-1.5 rounded-md border border-primary/20">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span className="font-medium capitalize">{apk.status}...</span>
-            </div>
+          {canRun && (
+            <Button
+              size="sm"
+              onClick={handleRunOnAppetize}
+              disabled={isUploadingToAppetize}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              {isUploadingToAppetize ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Smartphone className="w-4 h-4 mr-2" />
+              )}
+              {isUploadingToAppetize ? "Sending..." : "Run"}
+            </Button>
           )}
         </div>
       </header>
@@ -222,25 +323,27 @@ export default function Editor() {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-72 border-r bg-card/50 flex flex-col overflow-hidden">
-          <div className="p-3 border-b bg-muted/20 font-semibold text-sm flex items-center justify-between">
+        <aside className="w-64 border-r bg-card/50 flex flex-col overflow-hidden shrink-0">
+          <div className="p-3 border-b bg-muted/20 font-semibold text-xs uppercase tracking-wider text-muted-foreground flex items-center justify-between">
             <span>Project Files</span>
           </div>
           <div className="flex-1 overflow-auto py-2">
             {!fileTree ? (
               <div className="p-4 text-sm text-muted-foreground text-center">
-                {apk.status === "uploaded" ? "Decompile the APK to view files." : 
-                 apk.status === "decompiling" ? "Decompiling..." : 
-                 "No files available."}
+                {apk.status === "uploaded"
+                  ? "Decompile the APK to view files."
+                  : apk.status === "decompiling"
+                    ? "Decompiling..."
+                    : "No files available."}
               </div>
             ) : (
-              fileTree.map(node => (
-                <TreeItem 
-                  key={node.path} 
-                  node={node} 
-                  path={node.path} 
-                  onSelect={handleFileSelect} 
-                  selectedPath={selectedFile || ""} 
+              fileTree.map((node) => (
+                <TreeItem
+                  key={node.path}
+                  node={node}
+                  path={node.path}
+                  onSelect={handleFileSelect}
+                  selectedPath={selectedFile || ""}
                 />
               ))
             )}
@@ -248,29 +351,38 @@ export default function Editor() {
         </aside>
 
         {/* Editor */}
-        <main className="flex-1 flex flex-col min-w-0 bg-[#0d1117]">
+        <main
+          className={cn(
+            "flex flex-col min-w-0 bg-[#0d1117] transition-all duration-300",
+            showEmulator ? "flex-1" : "flex-1",
+          )}
+        >
           {selectedFile ? (
             <>
               <div className="flex-none h-10 bg-[#161b22] border-b border-[#30363d] flex items-center justify-between px-4">
                 <div className="flex items-center gap-2 text-sm text-[#e6edf3] font-mono">
                   <FileCode2 className="w-4 h-4 text-primary" />
-                  {selectedFile.split('/').pop()}
-                  {hasUnsavedChanges && <span className="w-2 h-2 rounded-full bg-yellow-500 ml-2"></span>}
+                  <span className="truncate">{selectedFile.split("/").pop()}</span>
+                  {hasUnsavedChanges && (
+                    <span className="w-2 h-2 rounded-full bg-yellow-500 ml-1 shrink-0" />
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button 
-                    size="sm" 
-                    variant="ghost" 
-                    className="h-7 text-xs text-[#e6edf3] hover:bg-[#30363d]"
-                    onClick={handleSaveFile}
-                    disabled={!hasUnsavedChanges || writeFile.isPending}
-                  >
-                    {writeFile.isPending ? <Loader2 className="w-3 h-3 mr-1.5 animate-spin" /> : <Save className="w-3 h-3 mr-1.5" />}
-                    Save
-                  </Button>
-                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 text-xs text-[#e6edf3] hover:bg-[#30363d]"
+                  onClick={handleSaveFile}
+                  disabled={!hasUnsavedChanges || writeFile.isPending}
+                >
+                  {writeFile.isPending ? (
+                    <Loader2 className="w-3 h-3 mr-1.5 animate-spin" />
+                  ) : (
+                    <Save className="w-3 h-3 mr-1.5" />
+                  )}
+                  Save
+                </Button>
               </div>
-              <div className="flex-1 relative">
+              <div className="flex-1 relative overflow-hidden">
                 {isFileLoading ? (
                   <div className="absolute inset-0 flex items-center justify-center bg-[#0d1117]">
                     <Loader2 className="w-6 h-6 animate-spin text-primary" />
@@ -295,9 +407,57 @@ export default function Editor() {
             </div>
           )}
         </main>
+
+        {/* Appetize Emulator Panel */}
+        {showEmulator && emulatorUrl && (
+          <div className="w-[380px] shrink-0 border-l bg-card flex flex-col overflow-hidden">
+            <div className="flex-none h-10 bg-muted/30 border-b flex items-center justify-between px-3">
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <Smartphone className="w-4 h-4 text-green-400" />
+                <span>Emulator</span>
+                <Badge variant="outline" className="text-xs bg-green-500/10 text-green-400 border-green-500/30">
+                  Live
+                </Badge>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-7 text-xs"
+                  onClick={handleRunOnAppetize}
+                  disabled={isUploadingToAppetize}
+                  title="Reload with latest APK"
+                >
+                  {isUploadingToAppetize ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Upload className="w-3 h-3" />
+                  )}
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                  onClick={() => setShowEmulator(false)}
+                >
+                  <X className="w-3.5 h-3.5" />
+                </Button>
+              </div>
+            </div>
+            <div className="flex-1 bg-black relative">
+              <iframe
+                key={emulatorUrl}
+                src={emulatorUrl}
+                className="absolute inset-0 w-full h-full border-0"
+                allow="fullscreen"
+                title="Appetize Emulator"
+              />
+            </div>
+          </div>
+        )}
       </div>
-      
-      {/* Error Footer (if applicable) */}
+
+      {/* Error Footer */}
       {apk.status === "error" && apk.errorMessage && (
         <div className="flex-none bg-destructive/10 border-t border-destructive/20 p-3 text-sm text-destructive flex items-start gap-2 max-h-40 overflow-auto">
           <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />

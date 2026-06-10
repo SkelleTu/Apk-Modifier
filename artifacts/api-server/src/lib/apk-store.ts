@@ -19,6 +19,7 @@ export interface ApkRecord {
   versionName: string | null;
   versionCode: string | null;
   errorMessage: string | null;
+  appetizePublicKey: string | null;
   createdAt: string;
   updatedAt: string;
 }

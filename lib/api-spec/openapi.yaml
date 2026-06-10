@@ -195,6 +195,29 @@ paths:
         "404":
           description: Not found
 
+  /apks/{id}/appetize:
+    post:
+      operationId: publishToAppetize
+      tags: [apks]
+      summary: Upload APK to Appetize.io and get an emulator session
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Appetize session info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppetizeSession"
+        "404":
+          description: Not found
+        "400":
+          description: APK not ready
+
   /apks/{id}/status:
     get:
       operationId: getApkStatus
@@ -307,4 +330,13 @@ components:
         filePath:
           type: string
         content:
+          type: string
+
+    AppetizeSession:
+      type: object
+      required: [publicKey, embedUrl]
+      properties:
+        publicKey:
+          type: string
+        embedUrl:
           type: string

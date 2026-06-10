@@ -33,7 +33,9 @@ import {
   WriteApkFileBody,
   RecompileApkParams,
   GetApkStatusParams,
+  PublishToAppetizeParams,
 } from "@workspace/api-zod";
+import { uploadToAppetize } from "../lib/appetize";
 
 const router: IRouter = Router();
 
@@ -316,6 +318,44 @@ router.get("/apks/:id/status", async (req, res): Promise<void> => {
     message: record.errorMessage ?? null,
     progress: null,
   });
+});
+
+router.post("/apks/:id/appetize", async (req, res): Promise<void> => {
+  const params = PublishToAppetizeParams.safeParse(req.params);
+  if (!params.success) {
+    res.status(400).json({ error: params.error.message });
+    return;
+  }
+  const record = loadMeta(params.data.id);
+  if (!record) {
+    res.status(404).json({ error: "APK not found" });
+    return;
+  }
+
+  // Use recompiled APK if available, otherwise original uploaded APK
+  let apkPath: string;
+  const recompiledPath = recompiledApkPath(record.id);
+  if (fs.existsSync(recompiledPath)) {
+    apkPath = recompiledPath;
+  } else {
+    apkPath = apkFilePath(record.id, record.name);
+  }
+
+  if (!fs.existsSync(apkPath)) {
+    res.status(400).json({ error: "No APK file available to upload" });
+    return;
+  }
+
+  try {
+    req.log.info({ id: record.id }, "Uploading to Appetize");
+    const session = await uploadToAppetize(apkPath, record.appetizePublicKey);
+    updateMeta(record.id, { appetizePublicKey: session.publicKey });
+    res.json(session);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    req.log.error({ err: msg }, "Appetize upload failed");
+    res.status(500).json({ error: msg });
+  }
 });
 
 router.get("/apks/:id/download", async (req, res): Promise<void> => {

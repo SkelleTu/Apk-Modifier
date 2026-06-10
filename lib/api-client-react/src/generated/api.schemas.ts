@@ -92,3 +92,8 @@ export interface FileWrite {
   content: string;
 }
 
+export interface AppetizeSession {
+  publicKey: string;
+  embedUrl: string;
+}
+

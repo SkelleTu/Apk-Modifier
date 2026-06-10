@@ -159,6 +159,19 @@ export const RecompileApkResponse = zod.object({
 
 
 /**
+ * @summary Upload APK to Appetize.io and get an emulator session
+ */
+export const PublishToAppetizeParams = zod.object({
+  "id": zod.coerce.string()
+})
+
+export const PublishToAppetizeResponse = zod.object({
+  "publicKey": zod.string(),
+  "embedUrl": zod.string()
+})
+
+
+/**
  * @summary Get processing status of an APK
  */
 export const GetApkStatusParams = zod.object({
